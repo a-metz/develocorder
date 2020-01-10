@@ -1,7 +1,7 @@
 import pytest
 
 import matplotlib
-from . import ValueLogger, set_logger, log
+from develocorder import ValueLogger, set_logger, log
 
 
 class DummyLogger:
