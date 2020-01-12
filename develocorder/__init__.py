@@ -1,2 +1,3 @@
-from .interface import set_plotter, plot
-from .value_plotter import ValuePlotter
+from .interface import Recorder, set_recorder, record
+from .logger import Logger
+from .plotter import Plotter
