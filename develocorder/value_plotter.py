@@ -2,36 +2,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class ValueLogger(object):
-    def __init__(self, show_plot=True):
-        self.plotter = {}
-        if show_plot:
-            ValuePlotter.show_plot()
+class ValuePlotter(object):
+    def __init__(self):
+        self.plots = {}
+        Plot.show()
 
     def add_plot(self, name, xlabel, filter_size=None):
-        self.plotter[name] = ValuePlotter(xlabel=xlabel, ylabel=name, filter_size=filter_size)
+        self.plots[name] = Plot(xlabel=xlabel, ylabel=name, filter_size=filter_size)
 
     def __call__(self, **kwargs):
         for key, value in kwargs.items():
-            if key in self.plotter.keys():
-                self.plotter[key].add(value)
-                self.plotter[key].plot()
+            if key in self.plots.keys():
+                self.plots[key].add(value)
+                self.plots[key].plot()
 
 
-class ValuePlotter(object):
+class Plot(object):
     plots_count = 0
 
     def __init__(self, xlabel, ylabel, filter_size=None):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.filter_size = filter_size
-        ValuePlotter.plots_count += 1
+        Plot.plots_count += 1
         self.index = self.plots_count
         self.values = []
 
     @classmethod
-    def show_plot(cls):
-        plt.ion()
+    def show(cls):
+        plt.ioff()
         plt.show()
 
     def add(self, value):

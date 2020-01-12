@@ -1,2 +1,2 @@
-from .interface import set_logger, log
-from .value_logger import ValueLogger
+from .interface import set_plotter, plot
+from .value_plotter import ValuePlotter
