@@ -1,6 +1,6 @@
 import pytest
 
-from develocorder import Recorder, set_recorder, record
+from develocorder import set_recorder, record
 
 
 def test_without_initialized_recorder():
@@ -8,7 +8,7 @@ def test_without_initialized_recorder():
     record(my_value=42)
 
 
-class RecordStub:
+class RecorderStub:
     def __init__(self):
         self.value = None
 
@@ -16,29 +16,22 @@ class RecordStub:
         self.value = value
 
 
-@pytest.fixture
-def recorder():
-    rec = Recorder()
-    set_recorder(rec)
-    return rec
-
-
-def test_delegation_to_correct_record(recorder):
-    my_record = RecordStub()
-    recorder.add(my_record, name="my_value")
-    other_record = RecordStub()
-    recorder.add(other_record, name="other_value")
+def test_delegation_to_correct_record():
+    my_recorder = RecorderStub()
+    set_recorder(my_value=my_recorder)
+    other_recorder = RecorderStub()
+    set_recorder(other_value=other_recorder)
 
     record(my_value=42)
 
-    assert my_record.value == 42
-    assert other_record.value == None
+    assert my_recorder.value == 42
+    assert other_recorder.value == None
 
 
-def test_nonexisting_record(recorder):
-    record_stub = RecordStub()
-    recorder.add(record_stub, name="my_value")
+def test_nonexisting_record():
+    recorder_stub = RecorderStub()
+    set_recorder(my_value=recorder_stub)
 
     record(other_value=42)
 
-    assert record_stub.value == None
+    assert recorder_stub.value == None
