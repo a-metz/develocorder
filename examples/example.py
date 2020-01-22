@@ -25,5 +25,7 @@ def example_score(episode):
     return episode * (1 + 0.3 * np.random.standard_normal())
 
 
-setup()
-run()
+if __name__ == "__main__":
+    setup()
+    run()
+    input("Press Enter to exit...")
