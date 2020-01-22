@@ -1,3 +1,3 @@
 from .interface import set_recorder, record
-from .logger import Logger
+from .logger import Logger, WindowFilterLogger
 from .plotter import Plotter

@@ -1,8 +1,23 @@
+from collections import deque
+
+import numpy as np
+
+
 class Logger:
-    def __init__(self, name, format_string="{name} ({index}): {value}"):
+    def __init__(self, name):
         self.name = name
-        self.index = 0
-        self.format_string = format_string
 
     def __call__(self, value):
-        print(self.format_string.format(name=self.name, index=self.index, value=value))
+        print("{}: {}".format(self.name, value))
+
+
+class WindowFilterLogger:
+    def __init__(self, name, filter_size):
+        self.name = name
+        self.values = deque(maxlen=filter_size)
+
+    def __call__(self, value):
+        self.values.append(value)
+
+        if len(self.values) == self.values.maxlen:
+            print("{}: {}".format(self.name, np.mean(self.values)))

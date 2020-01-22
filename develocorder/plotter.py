@@ -1,5 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+
+from .filter import filter_values
 
 
 class Plotter:
@@ -33,16 +34,5 @@ class Plotter:
         plt.ylabel(self.ylabel)
         plt.plot(self.values)
         if self.filter_size is not None:
-            plt.plot(self._filter_values(self.values))
+            plt.plot(filter_values(self.values, self.filter_size))
         plt.pause(0.001)
-
-    def _filter_values(self, values):
-        padded_values = np.concatenate(
-            [
-                np.full(self.filter_size // 2, values[0]),
-                np.array(values),
-                np.full(self.filter_size // 2 - 1, values[-1]),
-            ]
-        )
-        filter_kernel = np.ones((self.filter_size,)) / self.filter_size
-        return np.convolve(padded_values, filter_kernel, mode="valid")
