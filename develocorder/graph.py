@@ -63,6 +63,9 @@ class GraphContainer:
         for i, axes in enumerate(self.axes_list):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
+        # make some space for labels
+        self.figure.tight_layout(rect=(0.05, 0.05, 1, 1))
+
 
 _global_container_instance = None
 
