@@ -6,15 +6,15 @@ from .filter import filter_values
 
 
 class GraphBase:
-    def __init__(self, xlabel, ylabel, update_rate=1, max_size=None, window=None):
+    def __init__(self, xlabel, ylabel, update_rate=1, max_size=None, container=None):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate
-        self.window = window
+        self.container = container
 
-        if self.window is None:
-            self.window = global_window_instance()
-        self.axes = self.window.add_axes()
+        if self.container is None:
+            self.container = global_container_instance()
+        self.axes = self.container.add_axes()
 
         self.count = 0
         self.values = deque(maxlen=max_size)
@@ -28,7 +28,7 @@ class GraphBase:
             self.axes.clear()
             self.draw_decorations()
             self.draw_values()
-            self.window.refresh()
+            self.container.refresh()
 
     def draw_decorations(self):
         self.axes.set_xlabel(self.xlabel)
@@ -39,7 +39,7 @@ class GraphBase:
         pass
 
 
-class Plotter(GraphBase):
+class LinePlot(GraphBase):
     def __init__(self, *args, filter_size=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.filter_size = filter_size
@@ -51,7 +51,7 @@ class Plotter(GraphBase):
             self.axes.plot(self.indices, filter_values(self.values, self.filter_size))
 
 
-class Window:
+class GraphContainer:
     def __init__(self):
         self.figure = plt.figure(constrained_layout=True)
         self.figure.show()
@@ -78,13 +78,13 @@ class Window:
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
 
-_global_window_instance = None
+_global_container_instance = None
 
 
-def global_window_instance():
-    global _global_window_instance
+def global_container_instance():
+    global _global_container_instance
 
-    if _global_window_instance is None:
-        _global_window_instance = Window()
+    if _global_container_instance is None:
+        _global_container_instance = GraphContainer()
 
-    return _global_window_instance
+    return _global_container_instance

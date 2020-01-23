@@ -1,11 +1,11 @@
 import numpy as np
 
-from develocorder import Plotter, set_recorder, record
+from develocorder import LinePlot, set_recorder, record
 
 
 def setup():
-    set_recorder(loss=Plotter(xlabel="Step", ylabel="Loss", filter_size=32, update_rate=10, max_size=500))
-    set_recorder(score=Plotter(xlabel="Episode", ylabel="Score"))
+    set_recorder(loss=LinePlot(xlabel="Step", ylabel="Loss", filter_size=32, update_rate=10, max_size=500))
+    set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
 
 
 def run():

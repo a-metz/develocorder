@@ -1,7 +1,7 @@
 import pytest
 import matplotlib
 
-from develocorder import Plotter, set_recorder, record
+from develocorder import LinePlot, set_recorder, record
 
 
 @pytest.mark.filterwarnings(
@@ -11,8 +11,8 @@ def test_plotter_smoketest():
     # use backend which does not require a display for CI
     matplotlib.use("Agg")
 
-    set_recorder(value1=Plotter(xlabel="Sample", ylabel="Value 1", filter_size=32))
-    set_recorder(value2=Plotter(xlabel="Sample", ylabel="Value 2"))
+    set_recorder(value1=LinePlot(xlabel="Sample", ylabel="Value 1", filter_size=32))
+    set_recorder(value2=LinePlot(xlabel="Sample", ylabel="Value 2"))
 
     record(value1=1)
     record(value2=42)
