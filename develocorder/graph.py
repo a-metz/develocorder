@@ -6,7 +6,7 @@ from .filter import filter_values
 
 
 class GraphBase:
-    def __init__(self, xlabel, ylabel, update_rate=1, max_size=None, container=None):
+    def __init__(self, xlabel=None, ylabel=None, update_rate=1, max_size=None, container=None):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate

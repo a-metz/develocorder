@@ -11,8 +11,11 @@ def test_lineplot_smoketest():
     # use backend which does not require a display for CI
     matplotlib.use("Agg")
 
-    set_recorder(value1=LinePlot(xlabel="Sample", ylabel="Value 1", filter_size=32))
-    set_recorder(value2=LinePlot(xlabel="Sample", ylabel="Value 2"))
+    # all arguments
+    set_recorder(value1=LinePlot(xlabel="Sample", ylabel="Value 1", filter_size=2, update_rate=2, max_size=3))
+
+    # no arguments
+    set_recorder(value2=LinePlot())
 
     record(value1=1)
     record(value2=42)
