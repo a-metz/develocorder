@@ -13,7 +13,7 @@ class GraphBase:
         self.window = window
 
         if self.window is None:
-            self.window = Window.global_instance()
+            self.window = global_window_instance()
         self.axes = self.window.add_axes()
 
         self.count = 0
@@ -52,8 +52,6 @@ class Plotter(GraphBase):
 
 
 class Window:
-    _global_instance = None
-
     def __init__(self):
         self.figure = plt.figure(constrained_layout=True)
         self.figure.show()
@@ -61,13 +59,6 @@ class Window:
         self.num_rows = 0
         self.num_columns = 1
         self.num_axes = 0
-
-    @classmethod
-    def global_instance(cls):
-        if cls._global_instance is None:
-            cls._global_instance = cls()
-
-        return cls._global_instance
 
     def refresh(self):
         self.figure.canvas.draw()
@@ -85,3 +76,15 @@ class Window:
     def update_layout(self):
         for i, axes in enumerate(self.figure.axes):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
+
+
+_global_window_instance = None
+
+
+def global_window_instance():
+    global _global_window_instance
+
+    if _global_window_instance is None:
+        _global_window_instance = Window()
+
+    return _global_window_instance
