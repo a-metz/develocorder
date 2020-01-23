@@ -1,11 +1,51 @@
 Develocorder
 ============
 
-Simple live value logger using matplotlib
+Develocorder is a simple live value plotter for Python3 using Matplotlib. It is intended to give insights into the training of machine learning models / reinforcement learning agents with only minimal effort to add to existing code.
 
-TODOs:
-  * add heatmap plot
-  * add maxlen for all plots
-  * ipython notebook compatability
-  * persistent storage/loading of log
-  * global redraw rate
+![Original Develocorder](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Viewing_of_Develocorder_Film.jpg/319px-Viewing_of_Develocorder_Film.jpg)
+[image source](https://commons.wikimedia.org/wiki/File:Viewing_of_Develocorder_Film.jpg)
+
+
+Installation
+------------
+
+```
+$ git clone https://github.com/wahtak/develocorder
+$ cd develocorder
+$ pip install -e .
+```
+
+
+Simple Example
+--------------
+
+``` python
+# initialize once
+set_recorder(my_value=LinePlot())
+
+# add values to plot anywhere
+for _ in range(10):
+    record(my_value=random())
+```
+
+### Result
+![Simple Example](doc/simple_example.png)
+
+
+Fancy Example
+--------------
+
+See [examples/examples.py](examples/examples.py)
+
+![Fancy Example](doc/fancy_example.png)
+
+
+TODOs
+-----
+  - [ ] write docstrings for API
+  - [ ] document how to extend
+  - [ ] check ipython notebook compatability
+  - [ ] upload to pypi
+  - [ ] add new plot types
+  - [ ] persistent storage/loading of log(?)
