@@ -1,10 +1,12 @@
+from collections import deque
+
 import matplotlib.pyplot as plt
 
 from .filter import filter_values
 
 
 class GraphBase:
-    def __init__(self, xlabel, ylabel, update_rate=1, window=None):
+    def __init__(self, xlabel, ylabel, update_rate=1, max_size=None, window=None):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate
@@ -13,12 +15,15 @@ class GraphBase:
             window = Window.global_instance()
         self.axes = window.add_axes()
 
-        self.values = []
+        self.count = 0
+        self.values = deque(maxlen=max_size)
 
     def __call__(self, value):
+        self.count += 1
         self.values.append(value)
+        self.indices = range(self.count - len(self.values), self.count)
 
-        if len(self.values) % self.update_rate == 0:
+        if self.count % self.update_rate == 0:
             self.axes.clear()
             self.axes.set_xlabel(self.xlabel)
             self.axes.set_ylabel(self.ylabel)
@@ -36,10 +41,10 @@ class Plotter(GraphBase):
         self.filter_size = filter_size
 
     def draw(self):
-        self.axes.plot(self.values)
+        self.axes.plot(self.indices, self.values)
 
         if self.filter_size is not None:
-            self.axes.plot(filter_values(self.values, self.filter_size))
+            self.axes.plot(self.indices, filter_values(self.values, self.filter_size))
 
 
 class Window:
