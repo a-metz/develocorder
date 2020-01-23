@@ -36,7 +36,7 @@ for _ in range(10):
 Fancy Example
 --------------
 
-See [examples/examples.py](examples/examples.py)
+See [examples/examples.py](examples/fancy.py)
 
 ![Fancy Example](doc/fancy_example.png)
 
