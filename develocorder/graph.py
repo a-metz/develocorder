@@ -2,8 +2,6 @@ from collections import deque
 
 import matplotlib.pyplot
 
-from .filter import filter_values
-
 
 class GraphBase:
     def __init__(self, xlabel=None, ylabel=None, update_rate=1, max_size=None, container=None):
@@ -34,18 +32,6 @@ class GraphBase:
     def draw_values(self, axes, indices, values):
         """ to be implemented by concrete type """
         pass
-
-
-class LinePlot(GraphBase):
-    def __init__(self, *args, filter_size=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.filter_size = filter_size
-
-    def draw_values(self, axes, indices, values):
-        axes.plot(indices, values)
-
-        if self.filter_size is not None:
-            axes.plot(indices, filter_values(values, self.filter_size))
 
 
 class GraphContainer:
