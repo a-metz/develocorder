@@ -1,6 +1,6 @@
 from collections import deque
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot
 
 from .filter import filter_values
 
@@ -53,7 +53,7 @@ class LinePlot(GraphBase):
 
 class GraphContainer:
     def __init__(self):
-        self.figure = plt.figure(constrained_layout=True)
+        self.figure = matplotlib.pyplot.figure()
         self.figure.show()
 
         self.num_rows = 0
@@ -64,16 +64,16 @@ class GraphContainer:
         self.figure.canvas.draw()
 
     def add_axes(self):
-        self.increment_counts()
+        self._increment_counts()
         axes = self.figure.add_subplot(self.num_rows, self.num_columns, self.num_axes)
-        self.update_layout()
+        self._update_layout()
         return axes
 
-    def increment_counts(self):
+    def _increment_counts(self):
         self.num_axes += 1
         self.num_rows = self.num_axes // self.num_columns
 
-    def update_layout(self):
+    def _update_layout(self):
         for i, axes in enumerate(self.figure.axes):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
