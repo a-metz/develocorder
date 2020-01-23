@@ -10,10 +10,11 @@ class GraphBase:
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate
+        self.window = window
 
-        if window is None:
-            window = Window.global_instance()
-        self.axes = window.add_axes()
+        if self.window is None:
+            self.window = Window.global_instance()
+        self.axes = self.window.add_axes()
 
         self.count = 0
         self.values = deque(maxlen=max_size)
@@ -25,13 +26,16 @@ class GraphBase:
 
         if self.count % self.update_rate == 0:
             self.axes.clear()
-            self.axes.set_xlabel(self.xlabel)
-            self.axes.set_ylabel(self.ylabel)
-            self.draw()
-            Window.refresh()
+            self.draw_decorations()
+            self.draw_values()
+            self.window.refresh()
 
-    def draw(self):
-        """ to be implemented by specialisations """
+    def draw_decorations(self):
+        self.axes.set_xlabel(self.xlabel)
+        self.axes.set_ylabel(self.ylabel)
+
+    def draw_values(self):
+        """ to be implemented by concrete type """
         pass
 
 
@@ -40,7 +44,7 @@ class Plotter(GraphBase):
         super().__init__(*args, **kwargs)
         self.filter_size = filter_size
 
-    def draw(self):
+    def draw_values(self):
         self.axes.plot(self.indices, self.values)
 
         if self.filter_size is not None:
@@ -65,9 +69,8 @@ class Window:
 
         return cls._global_instance
 
-    @classmethod
-    def refresh(cls):
-        plt.pause(0.0001)
+    def refresh(self):
+        self.figure.canvas.draw()
 
     def add_axes(self):
         self.increment_counts()
