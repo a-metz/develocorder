@@ -3,18 +3,17 @@ import matplotlib.pyplot as plt
 from .filter import filter_values
 
 
-class Plotter:
-    def __init__(self, xlabel, ylabel, filter_size=None, update_rate=1, window=None):
+class GraphBase:
+    def __init__(self, xlabel, ylabel, update_rate=1, window=None):
         self.xlabel = xlabel
         self.ylabel = ylabel
-        self.filter_size = filter_size
         self.update_rate = update_rate
-
-        self.values = []
 
         if window is None:
             window = Window.global_instance()
         self.axes = window.add_axes()
+
+        self.values = []
 
     def __call__(self, value):
         self.values.append(value)
@@ -23,10 +22,24 @@ class Plotter:
             self.axes.clear()
             self.axes.set_xlabel(self.xlabel)
             self.axes.set_ylabel(self.ylabel)
-            self.axes.plot(self.values)
-            if self.filter_size is not None:
-                self.axes.plot(filter_values(self.values, self.filter_size))
+            self.draw()
             Window.refresh()
+
+    def draw(self):
+        """ to be implemented by specialisations """
+        pass
+
+
+class Plotter(GraphBase):
+    def __init__(self, *args, filter_size=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.filter_size = filter_size
+
+    def draw(self):
+        self.axes.plot(self.values)
+
+        if self.filter_size is not None:
+            self.axes.plot(filter_values(self.values, self.filter_size))
 
 
 class Window:
