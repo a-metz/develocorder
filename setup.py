@@ -4,11 +4,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="develocorder-wahtak",
+    name="develocorder",
     version="0.1",
-    author="Alexander Metz",
+    author="Alexander Wah Tak Metz",
     author_email="alexander.wt.metz@gmail.com",
-    description="Simple live value logger using matplotlib",
+    description="Simple live value plotter using Matplotlib",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/wahtak/develocorder",
@@ -19,5 +19,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.6",
-    install_requires=["matplotlib"],
+    install_requires=["numpy", "matplotlib"],
 )
