@@ -26,15 +26,12 @@ class GraphBase:
 
         if self.count % self.update_rate == 0:
             self.axes.clear()
-            self.draw_decorations()
-            self.draw_values()
+            self.axes.set_xlabel(self.xlabel)
+            self.axes.set_ylabel(self.ylabel)
+            self.draw_values(self.axes, self.indices, self.values)
             self.container.refresh()
 
-    def draw_decorations(self):
-        self.axes.set_xlabel(self.xlabel)
-        self.axes.set_ylabel(self.ylabel)
-
-    def draw_values(self):
+    def draw_values(self, axes, indices, values):
         """ to be implemented by concrete type """
         pass
 
@@ -44,11 +41,11 @@ class LinePlot(GraphBase):
         super().__init__(*args, **kwargs)
         self.filter_size = filter_size
 
-    def draw_values(self):
-        self.axes.plot(self.indices, self.values)
+    def draw_values(self, axes, indices, values):
+        axes.plot(indices, values)
 
         if self.filter_size is not None:
-            self.axes.plot(self.indices, filter_values(self.values, self.filter_size))
+            axes.plot(indices, filter_values(values, self.filter_size))
 
 
 class GraphContainer:
