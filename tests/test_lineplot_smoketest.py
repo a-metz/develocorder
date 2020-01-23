@@ -7,7 +7,7 @@ from develocorder import LinePlot, set_recorder, record
 @pytest.mark.filterwarnings(
     "ignore:Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure"
 )
-def test_plotter_smoketest():
+def test_lineplot_smoketest():
     # use backend which does not require a display for CI
     matplotlib.use("Agg")
 
