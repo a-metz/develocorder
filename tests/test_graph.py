@@ -46,7 +46,6 @@ def test_graph_container_pyplot_calls(pyplot):
 
     figure.add_subplot.assert_called_with(1, 1, 1)
     axes = figure.add_subplot.return_value
-    axes.change_geometry.assert_called_with(1, 1, 1)
 
     container.add_axes()
 

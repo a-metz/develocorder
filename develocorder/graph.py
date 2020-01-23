@@ -43,13 +43,16 @@ class GraphContainer:
         self.num_columns = 1
         self.num_axes = 0
 
+        self.axes_list = []
+
     def refresh(self):
         self.figure.canvas.draw()
 
     def add_axes(self):
         self._increment_counts()
-        axes = self.figure.add_subplot(self.num_rows, self.num_columns, self.num_axes)
         self._update_layout()
+        axes = self.figure.add_subplot(self.num_rows, self.num_columns, self.num_axes)
+        self.axes_list.append(axes)
         return axes
 
     def _increment_counts(self):
@@ -57,7 +60,7 @@ class GraphContainer:
         self.num_rows = self.num_axes // self.num_columns
 
     def _update_layout(self):
-        for i, axes in enumerate(self.figure.axes):
+        for i, axes in enumerate(self.axes_list):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
 
