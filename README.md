@@ -54,5 +54,6 @@ TODOs
 -----
   - [ ] document how to extend
   - [ ] better support for jupyter notebook
-  - [ ] add new plot types(?)
-  - [ ] persistent storage/loading of log(?)
+  - [ ] user definable layout (mutiple columns)
+  - [ ] add new plot types
+  - [ ] persistent storage/loading of log
