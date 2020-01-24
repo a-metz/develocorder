@@ -12,9 +12,7 @@ Installation
 ------------
 
 ```
-$ git clone https://github.com/wahtak/develocorder
-$ cd develocorder
-$ pip install -e .
+$ pip install develocorder
 ```
 
 
@@ -47,6 +45,5 @@ TODOs
   - [ ] write docstrings for API
   - [ ] document how to extend
   - [ ] check ipython notebook compatability
-  - [ ] upload to pypi
   - [ ] add new plot types
   - [ ] persistent storage/loading of log(?)
