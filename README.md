@@ -40,9 +40,17 @@ See [examples/examples.py](examples/fancy.py)
 ![Fancy Example](doc/fancy_example.png)
 
 
+Jupyter notebook
+----------------
+
+For use in a Jupyter notebook use the `%matplotlib notebook` backend. As of now you cannot rerun the cell which is showing the plot without restarting the notebook, otherwise the plot will disappear.
+
+See [examples/simple.ipynb](examples/simple.ipynb)
+
+
 TODOs
 -----
   - [ ] document how to extend
-  - [ ] check ipython notebook compatability
-  - [ ] add new plot types
+  - [ ] better support for jupyter notebook
+  - [ ] add new plot types(?)
   - [ ] persistent storage/loading of log(?)
