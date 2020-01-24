@@ -6,7 +6,7 @@ from develocorder.graph import *
 
 @patch("develocorder.graph._global_container_instance")
 def test_graph_base(container):
-    graph = GraphBase(xlabel="X", ylabel="Y", update_rate=2, max_size=3)
+    graph = GraphBase(xlabel="X", ylabel="Y", update_rate=2, max_length=3)
     graph.draw_values = MagicMock()
 
     container.add_axes.assert_called()

@@ -12,7 +12,7 @@ def test_heatmap_smoketest():
     matplotlib.use("Agg")
 
     # all arguments
-    set_recorder(value1=Heatmap(xlabel="Sample", ylabel="Values 1", update_rate=2, max_size=3))
+    set_recorder(value1=Heatmap(xlabel="Sample", ylabel="Values 1", update_rate=2, max_length=3))
 
     # no arguments
     set_recorder(value2=Heatmap())

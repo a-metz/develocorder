@@ -4,7 +4,7 @@ import matplotlib.pyplot
 
 
 class GraphBase:
-    def __init__(self, xlabel=None, ylabel=None, update_rate=1, max_size=None, container=None):
+    def __init__(self, xlabel=None, ylabel=None, update_rate=1, max_length=None, container=None):
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate
@@ -15,7 +15,7 @@ class GraphBase:
         self.axes = self.container.add_axes()
 
         self.count = 0
-        self.values = deque(maxlen=max_size)
+        self.values = deque(maxlen=max_length)
 
     def __call__(self, value):
         self.count += 1

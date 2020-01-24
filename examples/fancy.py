@@ -5,8 +5,8 @@ from develocorder import LinePlot, Heatmap, set_recorder, record
 
 def run_example():
     set_recorder(loss=LinePlot(xlabel="Step", ylabel="Loss", filter_size=64, update_rate=10))
-    set_recorder(loss_detail=LinePlot(xlabel="Step", ylabel="Loss Detail", update_rate=10, max_size=50))
-    set_recorder(action_values=Heatmap(xlabel="Step", ylabel="Action Values", update_rate=10, max_size=1000))
+    set_recorder(loss_detail=LinePlot(xlabel="Step", ylabel="Loss Detail", update_rate=10, max_length=50))
+    set_recorder(action_values=Heatmap(xlabel="Step", ylabel="Action Values", update_rate=10, max_length=1000))
     set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
 
     for episode in range(50):
