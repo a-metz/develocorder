@@ -1,6 +1,8 @@
 Develocorder
 ============
 
+![Pytest badge](https://github.com/wahtak/develocorder/workflows/Pytest/badge.svg)
+
 Develocorder is a simple live value plotter for Python3 using Matplotlib. It is intended to give insights into the training of machine learning models / reinforcement learning agents with only minimal effort to add to existing code.
 
 ![Original Develocorder](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Viewing_of_Develocorder_Film.jpg/319px-Viewing_of_Develocorder_Film.jpg)
