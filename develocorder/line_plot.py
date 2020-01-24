@@ -4,7 +4,15 @@ from .graph import GraphBase
 
 
 class LinePlot(GraphBase):
+    """
+    Lineplot for recording scalar values with optional filtering.
+    """
+
     def __init__(self, *args, filter_size=None, **kwargs):
+        """
+        :param filter_size int: size of filter kernel (window)
+        """
+
         super().__init__(*args, **kwargs)
         self.filter_size = filter_size
 

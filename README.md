@@ -42,7 +42,6 @@ See [examples/examples.py](examples/fancy.py)
 
 TODOs
 -----
-  - [ ] write docstrings for API
   - [ ] document how to extend
   - [ ] check ipython notebook compatability
   - [ ] add new plot types

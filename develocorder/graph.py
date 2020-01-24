@@ -4,7 +4,22 @@ import matplotlib.pyplot
 
 
 class GraphBase:
+    """
+    Base class for a graph in a container. Needs to be subclassed to implement actual drawing.
+    """
+
     def __init__(self, xlabel=None, ylabel=None, update_rate=1, max_length=None, container=None):
+        """Init to be called via subclass.
+
+        :param xlabel str: label for x axis
+        :param ylabel str: label for y axis
+        :param update_rate int: The divisor for updating the plot window.
+                                Only update every update_rate calls to graph(value).
+        :param max_length int: Maximum length of buffer for values. Older values are discarded.
+        :param container GraphContainer or None: Instance of container.
+                                                 If None then the global instance will be used.
+        """
+
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate
@@ -30,11 +45,19 @@ class GraphBase:
             self.container.refresh()
 
     def draw_values(self, axes, indices, values):
-        """ to be implemented by concrete type """
+        """Actual drawing on axes. To be implemented by concrete type.
+
+        :param axes Matplotlib.axes.Axes: Axes object to draw on
+        :param indices py:range: range of indices (one per value)
+        :param values deque[any]: recorded values
+        """
+
         pass
 
 
 class GraphContainer:
+    """Container for GraphBase which is shown as Matplotlib figure."""
+
     def __init__(self):
         self.figure = matplotlib.pyplot.figure()
         self.figure.show()

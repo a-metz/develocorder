@@ -4,6 +4,10 @@ from .graph import GraphBase
 
 
 class Heatmap(GraphBase):
+    """
+    Heatmap for recording fixed size list/array of values.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.colorbar = None
