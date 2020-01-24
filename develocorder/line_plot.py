@@ -14,6 +14,10 @@ class LinePlot(GraphBase):
         if self.filter_size is not None:
             axes.plot(indices, filter_values(values, self.filter_size))
 
+        # additionally plot point when there is only one value, as the line is not visible then
+        if len(values) == 1:
+            axes.scatter(indices, values)
+
 
 def filter_values(values, filter_size):
     padded_values = np.concatenate(
