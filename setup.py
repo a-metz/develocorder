@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="develocorder",
-    version="0.2.0",
+    version="0.2.1",
     author="Alexander Wah Tak Metz",
     author_email="alexander.wt.metz@gmail.com",
     description="Simple live value plotter using Matplotlib",
