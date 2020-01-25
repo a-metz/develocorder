@@ -20,8 +20,8 @@ class Heatmap(GraphBase):
         if right == left:
             right = left + 1
 
-        top = pixel_width
-        bottom = len(values[0]) + pixel_width
+        top = len(values[0]) - pixel_width
+        bottom = -pixel_width
 
         mappable = axes.imshow(
             np.stack(values).T, interpolation="nearest", aspect="auto", extent=[left, right, top, bottom],
