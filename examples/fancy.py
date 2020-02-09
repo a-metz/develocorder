@@ -1,19 +1,16 @@
+import time
+
 import numpy as np
 
-from develocorder import LinePlot, Heatmap, set_recorder, record
+from develocorder import LinePlot, Heatmap, set_recorder, record, set_update_period
 
 
 def run_example():
-    set_recorder(loss=LinePlot(xlabel="Step", ylabel="Loss", filter_size=64, update_rate=10))
-    set_recorder(
-        loss_detail=LinePlot(xlabel="Step", ylabel="Loss Detail", update_rate=10, max_length=50)
-    )
-    set_recorder(
-        action_values=Heatmap(
-            xlabel="Step", ylabel="Action Values", update_rate=10, max_length=1000
-        )
-    )
+    set_recorder(loss=LinePlot(xlabel="Step", ylabel="Loss", filter_size=64))
+    set_recorder(loss_detail=LinePlot(xlabel="Step", ylabel="Loss Detail", max_length=50))
+    set_recorder(action_values=Heatmap(xlabel="Step", ylabel="Action Values", max_length=1000))
     set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
+    set_update_period(0.5)
 
     for episode in range(50):
         for step in range(20):
@@ -22,6 +19,7 @@ def run_example():
             record(loss=loss)
             record(loss_detail=loss)
             record(action_values=example_action_values(i))
+            time.sleep(0.01)
 
         record(score=example_score(episode))
 
