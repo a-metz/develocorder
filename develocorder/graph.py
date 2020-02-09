@@ -69,8 +69,8 @@ class GraphBase:
 class GraphContainer:
     """Container for GraphBase which is shown as Matplotlib figure."""
 
-    def __init__(self):
-        self.figure = matplotlib.pyplot.figure()
+    def __init__(self, title="Develocorder"):
+        self.figure = matplotlib.pyplot.figure(title)
         self.figure.show()
 
         self.num_rows = 0
