@@ -53,8 +53,8 @@ set_recorder(loss_detail=LinePlot(max_length=50))
 # show heatmap for recording 1d-array values
 set_recorder(array_values=Heatmap(max_length=1000))
 
-# minimum update period (limit update rate for better performance)
-set_update_period(0.5)
+# minimum update period (limit rate a which graphs are redrawn for better performance)
+set_update_period(0.5)  # [seconds]
 
 # set number of columns
 set_num_columns(2)
