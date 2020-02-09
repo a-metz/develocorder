@@ -1,5 +1,6 @@
 import time
 from collections import deque
+import math
 
 import matplotlib.pyplot
 
@@ -102,13 +103,13 @@ class GraphContainer:
         self.graphs.append((axes, callback))
 
     def _update_layout(self):
-        self.num_rows = (self.num_axes + 1) // self.num_columns
+        self.num_rows = int(math.ceil(self.num_axes / self.num_columns))
 
         for i, (axes, _) in enumerate(self.graphs):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
         # make some space for labels
-        self.figure.tight_layout(rect=(0.05, 0.05, 1, 1), w_pad=4.0)
+        self.figure.tight_layout(h_pad=1.5, w_pad=1.5)
 
     def set_update_period(self, update_period):
         self.update_period = update_period
