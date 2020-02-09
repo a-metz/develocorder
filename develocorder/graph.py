@@ -27,22 +27,32 @@ class GraphBase:
 
         if self.container is None:
             self.container = global_container_instance()
-        self.axes = self.container.add_axes()
+        self.container.register_graph(callback=self.update)
 
         self.count = 0
+        self.last_update = 0
         self.values = deque(maxlen=max_length)
+        self.indices = range(0)
 
     def __call__(self, value):
         self.count += 1
         self.values.append(value)
         self.indices = range(self.count - len(self.values), self.count)
+        self.container.update()
 
-        if self.count % self.update_rate == 0:
-            self.axes.clear()
-            self.axes.set_xlabel(self.xlabel)
-            self.axes.set_ylabel(self.ylabel)
-            self.draw_values(self.axes, self.indices, self.values)
-            self.container.refresh()
+    def update(self, axes):
+        if self.last_update > self.count - self.update_rate:
+            updated = False
+            return updated
+
+        axes.clear()
+        axes.set_xlabel(self.xlabel)
+        axes.set_ylabel(self.ylabel)
+        self.draw_values(axes, self.indices, self.values)
+
+        self.last_update = self.count
+        updated = True
+        return updated
 
     def draw_values(self, axes, indices, values):
         """Actual drawing on axes. To be implemented by concrete type.
@@ -67,16 +77,19 @@ class GraphContainer:
         self.num_axes = 0
 
         self.axes_list = []
+        self.draw_callbacks = []
 
-    def refresh(self):
-        self.figure.canvas.draw()
+    def update(self):
+        updated = [callback(axes) for axes, callback in zip(self.axes_list, self.draw_callbacks)]
+        if any(updated):
+            self.figure.canvas.draw()
 
-    def add_axes(self):
+    def register_graph(self, callback):
         self._increment_counts()
         self._update_layout()
         axes = self.figure.add_subplot(self.num_rows, self.num_columns, self.num_axes)
         self.axes_list.append(axes)
-        return axes
+        self.draw_callbacks.append(callback)
 
     def _increment_counts(self):
         self.num_axes += 1
