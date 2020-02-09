@@ -23,10 +23,10 @@ class GraphBase:
         self.xlabel = xlabel
         self.ylabel = ylabel
         self.update_rate = update_rate
+        if container is None:
+            container = global_container_instance()
         self.container = container
 
-        if self.container is None:
-            self.container = global_container_instance()
         self.container.register_graph(callback=self.update)
 
         self.count = 0
