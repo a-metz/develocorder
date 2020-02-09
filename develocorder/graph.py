@@ -76,29 +76,29 @@ class GraphContainer:
         self.num_columns = 1
         self.num_axes = 0
 
-        self.axes_list = []
-        self.draw_callbacks = []
+        self.graphs = []
 
     def update(self):
-        updated = [callback(axes) for axes, callback in zip(self.axes_list, self.draw_callbacks)]
+        updated = [callback(axes) for axes, callback in self.graphs]
         if any(updated):
             self.figure.canvas.draw()
             # a bit of a hack to give the gui thread time to update, the value can be arbitrarily small
             matplotlib.pyplot.pause(1e-9)
 
     def register_graph(self, callback):
+        # update layout of previously added graphs
         self._increment_counts()
         self._update_layout()
+
         axes = self.figure.add_subplot(self.num_rows, self.num_columns, self.num_axes)
-        self.axes_list.append(axes)
-        self.draw_callbacks.append(callback)
+        self.graphs.append((axes, callback))
 
     def _increment_counts(self):
         self.num_axes += 1
         self.num_rows = self.num_axes // self.num_columns
 
     def _update_layout(self):
-        for i, axes in enumerate(self.axes_list):
+        for i, (axes, _) in enumerate(self.graphs):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
         # make some space for labels
