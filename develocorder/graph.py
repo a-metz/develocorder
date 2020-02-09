@@ -95,17 +95,15 @@ class GraphContainer:
 
     def register_graph(self, callback):
         # update layout of previously added graphs
-        self._increment_counts()
+        self.num_axes += 1
         self._update_layout()
 
         axes = self.figure.add_subplot(self.num_rows, self.num_columns, self.num_axes)
         self.graphs.append((axes, callback))
 
-    def _increment_counts(self):
-        self.num_axes += 1
-        self.num_rows = self.num_axes // self.num_columns
-
     def _update_layout(self):
+        self.num_rows = (self.num_axes + 1) // self.num_columns
+
         for i, (axes, _) in enumerate(self.graphs):
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
