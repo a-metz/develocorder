@@ -25,10 +25,11 @@ Simple Example
 # initialize once
 set_recorder(my_value=LinePlot())
 
-# add values to plot anywhere
+# add values to plot from anywhere in code
 for _ in range(10):
     record(my_value=random())
 ```
+See [examples/simple.py](examples/simple.py)
 
 ### Result
 ![Simple Example](doc/simple_example.png)
@@ -37,7 +38,28 @@ for _ in range(10):
 Fancy Example
 --------------
 
-See [examples/examples.py](examples/fancy.py)
+Some more features:
+
+``` python
+# axis labels
+set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
+
+# filter values (window filter kernel)
+set_recorder(loss=LinePlot(filter_size=64))
+
+# maximum history length
+set_recorder(loss_detail=LinePlot(max_length=50))
+
+# show heatmap for recording 1d-array values
+set_recorder(array_values=Heatmap(max_length=1000))
+
+# minimum update period (limit update rate for better performance)
+set_update_period(0.5)
+
+# set number of columns
+set_num_columns(2)
+```
+See [examples/fancy.py](examples/fancy.py)
 
 ![Fancy Example](doc/fancy_example.png)
 

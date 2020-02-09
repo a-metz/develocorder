@@ -6,17 +6,25 @@ from develocorder import LinePlot, Heatmap, set_recorder, record, set_update_per
 
 
 def run_example():
-    set_recorder(loss=LinePlot(xlabel="Step", ylabel="Loss", filter_size=64))
-    set_recorder(loss_detail=LinePlot(xlabel="Step", ylabel="Loss Detail", max_length=50))
-    set_recorder(action_values=Heatmap(xlabel="Step", ylabel="Action Values", max_length=1000))
-    set_recorder(
-        action_values_detail=Heatmap(xlabel="Step", ylabel="Action Values Detail", max_length=50)
-    )
-    set_recorder(state_values=LinePlot(xlabel="Step", ylabel="State Value", max_length=1000))
+    # axis labels
     set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
+
+    # filter values (window filter kernel)
+    set_recorder(loss=LinePlot(filter_size=64))
+
+    # maximum history length
+    set_recorder(loss_detail=LinePlot(max_length=50))
+
+    # show heatmap for recording 1d-array values
+    set_recorder(array_values=Heatmap(max_length=1000))
+
+    # minimum update period (limit update rate for better performance)
     set_update_period(0.5)
+
+    # set number of columns
     set_num_columns(2)
 
+    # generate example values
     for episode in range(50):
         for step in range(20):
             i = episode * 20 + step
