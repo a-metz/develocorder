@@ -8,7 +8,7 @@ Example:
 Hello World.
 """
 
-__recorders = {}
+_recorders = {}
 
 
 def set_recorder(**kwargs):
@@ -17,9 +17,9 @@ def set_recorder(**kwargs):
     :param [keyword] callable: Callable to be registered with its keyword as identifier.
     """
 
-    global __recorders
+    global _recorders
     for name, recorder in kwargs.items():
-        __recorders[name] = recorder
+        _recorders[name] = recorder
 
 
 def record(**kwargs):
@@ -29,7 +29,7 @@ def record(**kwargs):
                             with keyword as identifier.
     """
 
-    global __recorders
+    global _recorders
     for key, value in kwargs.items():
-        if key in __recorders.keys():
-            __recorders[key](value)
+        if key in _recorders.keys():
+            _recorders[key](value)
