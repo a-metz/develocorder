@@ -9,7 +9,7 @@ class GraphBase:
     Base class for a graph in a container. Needs to be subclassed to implement actual drawing.
     """
 
-    def __init__(self, xlabel=None, ylabel=None, update_rate=1, max_length=None, container=None):
+    def __init__(self, xlabel=None, ylabel=None, max_length=None, container=None):
         """Init to be called via subclass.
 
         :param xlabel str: label for x axis
@@ -23,7 +23,6 @@ class GraphBase:
 
         self.xlabel = xlabel
         self.ylabel = ylabel
-        self.update_rate = update_rate
         if container is None:
             container = global_container_instance()
         self.container = container
@@ -42,7 +41,7 @@ class GraphBase:
         self.container.update()
 
     def update(self, axes):
-        if self.last_update > self.count - self.update_rate:
+        if self.last_update >= self.count:
             updated = False
             return updated
 
