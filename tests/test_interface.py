@@ -1,8 +1,11 @@
+from unittest.mock import patch
+
 import pytest
 
 from develocorder import set_recorder, record
 
 
+@patch("develocorder.interface._recorders", {})
 def test_without_initialized_recorder():
     # expect no error
     record(my_value=42)
@@ -16,6 +19,7 @@ class RecorderStub:
         self.value = value
 
 
+@patch("develocorder.interface._recorders", {})
 def test_delegation_to_correct_record():
     my_recorder = RecorderStub()
     set_recorder(my_value=my_recorder)
@@ -28,6 +32,7 @@ def test_delegation_to_correct_record():
     assert other_recorder.value == None
 
 
+@patch("develocorder.interface._recorders", {})
 def test_nonexisting_record():
     recorder_stub = RecorderStub()
     set_recorder(my_value=recorder_stub)

@@ -10,6 +10,7 @@ from develocorder import LinePlot, set_recorder, record
     "ignore:Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure"
 )
 @patch("develocorder.graph._global_container_instance", None)
+@patch("develocorder.interface._recorders", {})
 def test_lineplot_smoketest():
     # use backend which does not require a display for CI
     matplotlib.use("Agg")
