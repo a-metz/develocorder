@@ -32,4 +32,4 @@ class Heatmap(GraphBase):
 
         if self.colorbar is not None:
             self.colorbar.remove()
-        self.colorbar = self.container.figure.colorbar(mappable, ax=self.axes)
+        self.colorbar = self.container.figure.colorbar(mappable, ax=axes)
