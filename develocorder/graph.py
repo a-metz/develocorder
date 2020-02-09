@@ -83,6 +83,8 @@ class GraphContainer:
         updated = [callback(axes) for axes, callback in zip(self.axes_list, self.draw_callbacks)]
         if any(updated):
             self.figure.canvas.draw()
+            # a bit of a hack to give the gui thread time to update, the value can be arbitrarily small
+            matplotlib.pyplot.pause(1e-9)
 
     def register_graph(self, callback):
         self._increment_counts()
