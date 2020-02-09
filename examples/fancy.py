@@ -9,6 +9,10 @@ def run_example():
     set_recorder(loss=LinePlot(xlabel="Step", ylabel="Loss", filter_size=64))
     set_recorder(loss_detail=LinePlot(xlabel="Step", ylabel="Loss Detail", max_length=50))
     set_recorder(action_values=Heatmap(xlabel="Step", ylabel="Action Values", max_length=1000))
+    set_recorder(
+        action_values_detail=Heatmap(xlabel="Step", ylabel="Action Values Detail", max_length=50)
+    )
+    set_recorder(state_values=LinePlot(xlabel="Step", ylabel="State Value", max_length=1000))
     set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
     set_update_period(0.5)
     set_num_columns(2)
@@ -19,7 +23,10 @@ def run_example():
             loss = example_loss(i)
             record(loss=loss)
             record(loss_detail=loss)
-            record(action_values=example_action_values(i))
+            action_values = example_values(i)
+            record(action_values=action_values)
+            record(action_values_detail=action_values)
+            record(state_values=example_values(i))
             time.sleep(0.01)
 
         record(score=example_score(episode))
@@ -33,7 +40,7 @@ def example_score(i):
     return i * (1 + 0.1 * np.random.standard_normal())
 
 
-def example_action_values(i):
+def example_values(i):
     return np.array([1, 0.3, 0.2, 0.1, 0.3]) * i * 0.001 * (1 + 0.1 * np.random.standard_normal(5))
 
 
