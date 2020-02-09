@@ -110,7 +110,14 @@ class GraphContainer:
             axes.change_geometry(self.num_rows, self.num_columns, i + 1)
 
         # make some space for labels
-        self.figure.tight_layout(rect=(0.05, 0.05, 1, 1))
+        self.figure.tight_layout(rect=(0.05, 0.05, 1, 1), w_pad=4.0)
+
+    def set_update_period(self, update_period):
+        self.update_period = update_period
+
+    def set_num_columns(self, num_columns):
+        self.num_columns = num_columns
+        self._update_layout()
 
 
 _global_container_instance = None
@@ -125,13 +132,16 @@ def global_container_instance():
     return _global_container_instance
 
 
-def set_update_period(seconds, container=None):
+def set_update_period(update_period):
     """ Set global update period in seconds.
 
     Graphs will only be redrawn after specified time has passed.
     """
 
-    if container is None:
-        container = global_container_instance()
+    global_container_instance().set_update_period(update_period)
 
-    container.update_period = seconds
+
+def set_num_columns(num_columns):
+    """ Set number of columns in graph container."""
+
+    global_container_instance().set_num_columns(num_columns)

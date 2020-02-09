@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from develocorder import LinePlot, Heatmap, set_recorder, record, set_update_period
+from develocorder import LinePlot, Heatmap, set_recorder, record, set_update_period, set_num_columns
 
 
 def run_example():
@@ -11,6 +11,7 @@ def run_example():
     set_recorder(action_values=Heatmap(xlabel="Step", ylabel="Action Values", max_length=1000))
     set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
     set_update_period(0.5)
+    set_num_columns(2)
 
     for episode in range(50):
         for step in range(20):
