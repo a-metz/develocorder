@@ -78,11 +78,11 @@ class GraphContainer:
 
         self.graphs = []
         self.update_period = 0.0
-        self.last_updated = 0.0
+        self.last_update = 0.0
 
     def update(self):
         # skip updating if not enough time has passed
-        if time.time() < self.last_updated + self.update_period:
+        if time.time() < self.last_update + self.update_period:
             return
 
         updated = [callback(axes) for axes, callback in self.graphs]
@@ -91,7 +91,7 @@ class GraphContainer:
             # a bit of a hack to give the gui thread time to update, the value can be arbitrarily small
             matplotlib.pyplot.pause(1e-9)
 
-        self.last_updated = time.time()
+        self.last_update = time.time()
 
     def register_graph(self, callback):
         # update layout of previously added graphs
