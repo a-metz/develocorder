@@ -24,7 +24,10 @@ class Heatmap(GraphBase):
         bottom = -pixel_width
 
         mappable = axes.imshow(
-            np.stack(values).T, interpolation="nearest", aspect="auto", extent=[left, right, top, bottom],
+            np.stack(values).T,
+            interpolation="nearest",
+            aspect="auto",
+            extent=[left, right, top, bottom],
         )
 
         if self.colorbar is not None:
