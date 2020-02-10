@@ -49,5 +49,6 @@ def example_values(i):
 
 
 if __name__ == "__main__":
+    np.random.seed(0)
     run_example()
     input("Press Enter to exit...")

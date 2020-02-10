@@ -11,5 +11,6 @@ def run_example():
 
 
 if __name__ == "__main__":
+    random.seed(0)
     run_example()
     input("Press Enter to exit...")
