@@ -42,18 +42,18 @@ Some more features:
 
 ``` python
 # axis labels
-set_recorder(score=LinePlot(xlabel="Episode", ylabel="Score"))
+set_recorder(labeled=LinePlot(xlabel="Episode", ylabel="Score"))
 
 # filter values (window filter kernel)
-set_recorder(loss=LinePlot(filter_size=64))
+set_recorder(filtered=LinePlot(filter_size=64))
 
 # maximum history length
-set_recorder(loss_detail=LinePlot(max_length=50))
+set_recorder(detail=LinePlot(max_length=50))
 
 # show heatmap for recording 1d-array values
-set_recorder(array_values=Heatmap(max_length=1000))
+set_recorder(array=Heatmap())
 
-# minimum update period (limit rate a which graphs are redrawn for better performance)
+# minimum update period (limit update rate for better performance)
 set_update_period(0.5)  # [seconds]
 
 # set number of columns
