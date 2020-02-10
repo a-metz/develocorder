@@ -1,3 +1,5 @@
+from collections import deque
+
 import numpy as np
 
 from .graph import GraphBase
@@ -5,38 +7,48 @@ from .graph import GraphBase
 
 class LinePlot(GraphBase):
     """
-    Lineplot for recording scalar values with optional filtering.
+    Lineplot for recording scalar values.
     """
 
-    def __init__(self, *args, filter_size=None, **kwargs):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def draw_values(self, axes, indices, values):
+        axes.plot(indices, values)
+
+        # additionally plot point when there is only one value, as the line is not visible then
+        if len(values) == 1:
+            value = values[0]
+            index = indices[0]
+
+            # in case of multidimensional value
+            if hasattr(value, "__len__"):
+                for scalar in value:
+                    axes.scatter(index, scalar)
+            else:
+                axes.scatter(index, value)
+
+
+class FilteredLinePlot(LinePlot):
+    """
+    Lineplot for recording scalar values with additional window filtered plot.
+    """
+
+    def __init__(self, filter_size, *args, **kwargs):
         """
         :param filter_size int: size of filter kernel (window)
         """
 
         super().__init__(*args, **kwargs)
-        self.filter_size = filter_size
+        self.filter_buffer = deque(maxlen=filter_size)
 
-    def draw_values(self, axes, indices, values):
-        axes.plot(indices, values)
+    def __call__(self, value):
+        self.filter_buffer.append(value)
+        filtered = np.mean(self.filter_buffer, axis=0)
+        # flatten in case of multidimensional value
+        value_with_filtered = np.dstack([value, filtered]).flatten()
 
-        if self.filter_size is not None:
-            axes.plot(indices, filter_values(values, self.filter_size))
-
-        # additionally plot point when there is only one value, as the line is not visible then
-        if len(values) == 1:
-            axes.scatter(indices, values)
-
-
-def filter_values(values, filter_size):
-    padded_values = np.concatenate(
-        [
-            np.full(filter_size // 2, values[0]),
-            np.array(values),
-            np.full(filter_size // 2 - 1, values[-1]),
-        ]
-    )
-    filter_kernel = np.ones((filter_size,)) / filter_size
-    return np.convolve(padded_values, filter_kernel, mode="valid")
+        super().__call__(value_with_filtered)
 
 
 class DownsampledLinePlot(LinePlot):
@@ -51,14 +63,13 @@ class DownsampledLinePlot(LinePlot):
         """
 
         super().__init__(*args, **kwargs)
-        self._filter_size = filter_size
+        self.filter_size = filter_size
         self.filter_buffer = []
 
     def __call__(self, value):
         self.filter_buffer.append(value)
 
-        if len(self.filter_buffer) == self._filter_size:
-            filtered_value = np.mean(self.filter_buffer)
+        if len(self.filter_buffer) == self.filter_size:
             filtered_value = np.mean(self.filter_buffer, axis=0)
             self.filter_buffer.clear()
 
@@ -66,6 +77,6 @@ class DownsampledLinePlot(LinePlot):
 
     def draw_values(self, axes, indices, values):
         downsampled_indices = range(
-            indices.start * self._filter_size, indices.stop * self._filter_size, self._filter_size
+            indices.start * self.filter_size, indices.stop * self.filter_size, self.filter_size
         )
         super().draw_values(axes, downsampled_indices, values)

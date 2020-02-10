@@ -16,7 +16,7 @@ def test_lineplot_smoketest():
     matplotlib.use("Agg")
 
     # all arguments
-    set_recorder(value1=LinePlot(xlabel="Sample", ylabel="Value 1", filter_size=2, max_length=3))
+    set_recorder(value1=LinePlot(max_length=3, xlabel="Sample", ylabel="LinePlot"))
 
     # no arguments
     set_recorder(value2=LinePlot())
