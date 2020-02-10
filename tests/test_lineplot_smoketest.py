@@ -1,9 +1,10 @@
+import random
 from unittest.mock import patch
 
 import pytest
 import matplotlib
 
-from develocorder import LinePlot, set_recorder, record
+from develocorder import LinePlot, FilteredLinePlot, DownsampledLinePlot, set_recorder, record
 
 
 @pytest.mark.filterwarnings(
@@ -21,11 +22,22 @@ def test_lineplot_smoketest():
     # no arguments
     set_recorder(value2=LinePlot())
 
-    record(value1=1)
-    record(value2=42)
-    record(value1=3)
-    record(value2=43)
-    record(value1=6)
-    record(value1=9)
-    record(value1=-1)
-    record(value3=0)
+    set_recorder(
+        value3=FilteredLinePlot(
+            filter_size=3, max_length=7, xlabel="Sample", ylabel="FilteredLinePlot"
+        )
+    )
+
+    set_recorder(
+        value3=DownsampledLinePlot(
+            filter_size=3, max_length=7, xlabel="Sample", ylabel="DownsampledLinePlot"
+        )
+    )
+
+    random.seed(0)
+
+    for _ in range(10):
+        record(value1=random.random())
+        record(value2=[random.random(), random.random()])
+        record(value3=random.random())
+        record(value4=random.random())
