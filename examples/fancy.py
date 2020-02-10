@@ -19,19 +19,19 @@ def run_example():
     set_recorder(labeled=LinePlot(xlabel="Episode", ylabel="Score"))
 
     # additional filtered values (window filter)
-    set_recorder(filtered=FilteredLinePlot(filter_size=50))
+    set_recorder(filtered=FilteredLinePlot(filter_size=50, xlabel="Filtered"))
 
     # maximum history length
-    set_recorder(detail=LinePlot(max_length=50))
+    set_recorder(detail=LinePlot(max_length=50, xlabel="Detail"))
 
     # downsampled values (record mean of every filter_size values)
-    set_recorder(downsampled=DownsampledLinePlot(filter_size=5))
+    set_recorder(downsampled=DownsampledLinePlot(filter_size=5, xlabel="Downsampled"))
 
     # multiple curves for recording 1d-array values
-    set_recorder(multiple=FilteredLinePlot(filter_size=50))
+    set_recorder(multiple=FilteredLinePlot(filter_size=50, xlabel="Multiple"))
 
     # heatmap for recording 1d-array values
-    set_recorder(heatmap=Heatmap())
+    set_recorder(heatmap=Heatmap(xlabel="Heatmap"))
 
     # minimum update period (limit update rate for better performance)
     set_update_period(0.5)  # [seconds]

@@ -44,14 +44,20 @@ Some more features:
 # axis labels
 set_recorder(labeled=LinePlot(xlabel="Episode", ylabel="Score"))
 
-# filter values (window filter kernel)
-set_recorder(filtered=LinePlot(filter_size=64))
+# additional filtered values (window filter)
+set_recorder(filtered=FilteredLinePlot(filter_size=50))
 
 # maximum history length
 set_recorder(detail=LinePlot(max_length=50))
 
-# show heatmap for recording 1d-array values
-set_recorder(array=Heatmap())
+# downsampled values (record mean of every filter_size values)
+set_recorder(downsampled=DownsampledLinePlot(filter_size=5))
+
+# multiple curves for recording 1d-array values
+set_recorder(multiple=FilteredLinePlot(filter_size=50))
+
+# heatmap for recording 1d-array values
+set_recorder(heatmap=Heatmap())
 
 # minimum update period (limit update rate for better performance)
 set_update_period(0.5)  # [seconds]
