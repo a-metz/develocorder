@@ -59,6 +59,7 @@ class DownsampledLinePlot(LinePlot):
 
         if len(self.filter_buffer) == self._filter_size:
             filtered_value = np.mean(self.filter_buffer)
+            filtered_value = np.mean(self.filter_buffer, axis=0)
             self.filter_buffer.clear()
 
             super().__call__(filtered_value)
